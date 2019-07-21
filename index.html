@@ -22,6 +22,15 @@
         flex-direction: column;
       }
 
+      .image-view {
+        width: 500px;
+        height: auto;
+      }
+      .image-view img {
+        width: 100%;
+        height: 100%;
+      }
+
       canvas {
         position: absolute;
       }
@@ -30,5 +39,6 @@
   <body>
     <input type="file" id="jsImageUpload" />
     <span>Loaded <span id="jsFaceLength"></span></span>
+    <div id="jsImageView" class="image-view"></div>
   </body>
 </html>
