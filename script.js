@@ -13,11 +13,20 @@ function start() {
     const image = await faceapi.bufferToImage(imageUpload.files[0]);
     imageView.innerHTML = '';
     imageView.append(image);
-
+    const canvas = faceapi.createCanvasFromMedia(image);
+    imageView.append(canvas);
+    const displaySize = { width: image.width, height: image.height };
+    faceapi.matchDimensions(canvas, displaySize);
     const detections = await faceapi
       .detectAllFaces(image)
       .withFaceLandmarks()
       .withFaceDescriptors();
     faceLength.innerHTML = detections.length;
+    const resizedDetections = faceapi.resizeResults(detections, displaySize);
+    resizedDetections.forEach(detection => {
+      const box = detection.detection.box;
+      const drawBox = new faceapi.draw.DrawBox(box, { label: 'Face' });
+      drawBox.draw(canvas);
+    });
   });
 }
